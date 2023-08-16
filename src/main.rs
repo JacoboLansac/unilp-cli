@@ -23,9 +23,9 @@ struct LPposition {
 
 fn parse_sentiment(sent_str: &str) -> Result<Sentiment, &str> {
     match sent_str {
-        "bullish" => Ok(Sentiment::Bullish),
-        "bearish" => Ok(Sentiment::Bearish),
-        "neutral" => Ok(Sentiment::Neutral),
+        "bullish" | "bull" => Ok(Sentiment::Bullish),
+        "bearish" | "bear" => Ok(Sentiment::Bearish),
+        "neutral" | "neut" => Ok(Sentiment::Neutral),
         _ => Err("Invalid sentiment"),
     }
 }
@@ -86,5 +86,8 @@ fn main() {
     let r = get_r_value(&timeframe);
     let lp_position = get_lp_position(current_price, sentiment, r);
 
-    println!("{:?}", lp_position);
+    println!(
+        "(min_price, max_price): ({:.6}, {:.6})",
+        lp_position.min_price, lp_position.max_price
+    );
 }
